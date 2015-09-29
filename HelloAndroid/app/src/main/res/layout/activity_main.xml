@@ -5,33 +5,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:id="@+id/msg_box" android:text="0" android:layout_width="wrap_content"
+    <TextView android:id="@+id/msg_box" android:text="@string/msg_hello" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="40sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textAlignment="gravity" />
+        android:gravity="center"
+        android:visibility="invisible" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="-"
-        android:id="@+id/dec_button"
+        android:id="@+id/button_say"
         android:layout_below="@+id/msg_box"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="30dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:id="@+id/inc_button"
-        android:layout_below="@+id/msg_box"
-        android:layout_toRightOf="@+id/dec_button"
-        android:layout_toEndOf="@+id/dec_button"
-        android:textSize="30dp" />
+        android:textSize="30sp"
+        android:text="@string/text_button_say_hello" />
 
 </RelativeLayout>
