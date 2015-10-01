@@ -25,7 +25,8 @@ proguard/
 
 # Android Studio project artifacts
 **.idea/
-*.iml
+**/*.iml
+
 
 # Log Files
 *.log
