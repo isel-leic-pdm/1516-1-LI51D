@@ -8,7 +8,7 @@ import android.widget.TextView;
 /**
  * Base class for activities on the Activity lifecycle demo.
  */
-public class LifecycleActivityBase extends LoggingActivity {
+public abstract class LifecycleActivityBase extends LoggingActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
