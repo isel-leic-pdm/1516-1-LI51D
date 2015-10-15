@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ModernArtUI</string>
+    <string name="title_activity_main">Modern Art UI</string>
+    <string name="title_activity_tile_settings">Tile Settings</string>
+    <string name="action_more">More Information</string>
+    <string name="action_author">Author</string>
+    <string name="action_transform">Transform</string>
+    <string name="more_dialog_title">Inspired by the works of artits such as Piet Mondrian and Ben Nicholson.</string>
+    <string name="more_dialog_message">Click below to learn more!</string>
+    <string name="more_dialog_ok_button">Visit MOMA</string>
+    <string name="more_dialog_cancel_button">Not now!</string>
+    <string name="hsv_hue_label">H</string>
+    <string name="hsv_saturation_label">S</string>
+    <string name="hsv_value_label">V</string>
+    <string name="tile_settings_activity_button_cancel">Cancel</string>
+    <string name="tile_settings_activity_button_ok">Done</string>
+    <string name="transform_h_name">Linear Hue Transform</string>
+    <string name="transform_s_name">Linear Saturation Transform</string>
+    <string name="transform_v_name">Linear Value Transform</string>
+</resources>
