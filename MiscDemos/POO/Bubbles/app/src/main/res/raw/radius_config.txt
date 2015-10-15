@@ -1,0 +1,4 @@
+1-10 poo.demos.bubbles.model.strategies.ConstantValue 128
+10-15 poo.demos.bubbles.model.strategies.RandomInFixedInterval  64 128
+15-20 poo.demos.bubbles.model.strategies.RandomInFixedInterval  32 64
+20-30 poo.demos.bubbles.model.strategies.ConstantValue 32

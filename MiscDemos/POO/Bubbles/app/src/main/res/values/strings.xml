@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bubbles</string>
+    <string name="title_activity_level_selection">Bubbles</string>
+    <string name="activity_select_level_label">Select Level</string>
+
+    <string name="level_label">Level:</string>
+    <string name="score_label">Score:</string>
+</resources>

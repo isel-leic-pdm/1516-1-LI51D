@@ -1,0 +1,18 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BubblesTheme" parent="android:Theme.DeviceDefault">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="BubblesThemeFullScreen" parent="android:Theme.DeviceDefault.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- The style of the activity's title label -->
+    <style name="TitleLabelStyle" parent="android:TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:layout_marginTop">@dimen/activity_title_label_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/activity_title_label_vertical_margin</item>
+    </style>
+
+</resources>

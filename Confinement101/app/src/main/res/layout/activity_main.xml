@@ -39,7 +39,7 @@
             android:layout_below="@+id/msg_percentage"
             android:layout_toRightOf="@+id/button_start"
             android:layout_toEndOf="@+id/button_start"
-            android:enabled="false"
+            android:enabled="true"
             android:layout_weight="1"
             android:textSize="24sp" />
     </LinearLayout>
