@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tempo</string>
+    <string name="edit_hint">Cidade</string>
+    <string name="empty_city_toast">Introduza o nome da cidade</string>
+    <string name="label_max_temp">Max</string>
+    <string name="label_min_temp">Min</string>
+    <string name="label_today">Hoje</string>
+    <string name="label_wind">Vento</string>
+    <string name="text_default_temp">- - ºC</string>
+    <string name="text_temp_units">ºC</string>
+    <string name="title_activity_main">Tempo</string>
+    <string name="title_activity_weather">Tempo</string>
+</resources>
