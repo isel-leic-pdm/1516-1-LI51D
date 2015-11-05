@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.HandlerThread;
 
 import android.os.Handler;
+import android.os.Looper;
 
 import pdm.demos.weatherapp.providers.WeatherInfo;
 

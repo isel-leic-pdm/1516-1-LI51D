@@ -19,6 +19,10 @@ import pdm.demos.weatherapp.utils.MyAsyncTask;
  *
  * A possible design approach is to associate activities (and fragments) to the Controller
  * role in the MVC design pattern. That's the approach we are going to use in this application.
+ *
+ * TODO: Preserve view state. Cancel background work upon activity destruction. Use headless
+ * fragment to preserve asynchronous fetching of weather info across configuration changes
+ * (if we are dealing with a screen orientation change)
  */
 public class MainActivity extends Activity {
 
@@ -81,20 +85,21 @@ public class MainActivity extends Activity {
      * Gets the weather information.
      */
     private void fetchWeatherInfo(String cityName) {
-        new OpenWeatherProvider().getWeatherInfoAsync(cityName, language, units,
-                new WeatherInfoProvider.Callback() {
-                    @Override
-                    public void onResult(@NonNull WeatherInfoProvider.CallResult result) {
-                        enableUI();
-                        try {
-                            navigateToWeatherActivity(result.getResult());
-                        } catch (Exception e) {
-                            Toast.makeText(MainActivity.this, R.string.error_msg_couldntget, Toast.LENGTH_LONG)
-                                    .show();
+        ((WeatherApplication) getApplication()).getWeatherInfoProvider()
+            .getWeatherInfoAsync(cityName, language, units,
+                    new WeatherInfoProvider.Callback() {
+                        @Override
+                        public void onResult(@NonNull WeatherInfoProvider.CallResult result) {
+                            enableUI();
+                            try {
+                                navigateToWeatherActivity(result.getResult());
+                            } catch (Exception e) {
+                                Toast.makeText(MainActivity.this, R.string.error_msg_couldntget, Toast.LENGTH_LONG)
+                                        .show();
+                            }
                         }
                     }
-                }
-        );
+            );
     }
 
     /**
@@ -111,7 +116,8 @@ public class MainActivity extends Activity {
             @Override
             protected WeatherInfo doInBackground(String cityName) {
                 try {
-                    return new OpenWeatherProvider().getWeatherInfo(cityName, language, units);
+                    return ((WeatherApplication) getApplication()).getWeatherInfoProvider()
+                                .getWeatherInfo(cityName, language, units);
                 } catch (Exception e) {
                     error = e;
                     return null;

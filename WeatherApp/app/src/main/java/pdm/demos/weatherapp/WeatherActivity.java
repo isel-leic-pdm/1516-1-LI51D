@@ -15,6 +15,8 @@ import pdm.demos.weatherapp.providers.WeatherInfo;
  *
  * <p>The weather information to be displayed is received as an extra of the intent used to
  * explicitly navigate to this activity.</p>
+ *
+ * TODO: display remaining weather elements and image (the image is to be shown using a fragment)
  */
 public class WeatherActivity extends Activity {
 
