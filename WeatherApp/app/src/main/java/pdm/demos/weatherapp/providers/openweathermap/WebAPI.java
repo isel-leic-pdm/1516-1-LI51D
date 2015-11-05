@@ -1,8 +1,7 @@
-package pdm.demos.weatherapp;
+package pdm.demos.weatherapp.providers.openweathermap;
 
 import retrofit.Call;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -13,15 +12,8 @@ import retrofit.http.Query;
  * codebase depends directly of this contract, we create a pervasive dependency to this library.
  * When developing software solutions one must consider this consequence carefully. Third-party
  * dependencies may become a liability.</p>
- *
- * <p>In our case, and because we are having fun, we will not address this problem. But consider
- * this: what would be required to contain dependencies from our codebase to this library? </p>
- *
- * <p>Instead of using constant static fields for specifying the strings used in the annotations,
- * which is usually a good practice, we use the string literals, which in this case increases
- * readability.</p>
  */
-public interface WeatherServiceAPI {
+public interface WebAPI {
 
     /** The base URL of the Weather Service API. */
     String BASE_URL = "http://api.openweathermap.org";

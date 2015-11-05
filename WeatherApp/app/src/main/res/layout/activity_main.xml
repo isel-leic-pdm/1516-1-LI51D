@@ -39,15 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_async"
-            android:id="@+id/async"
+            android:id="@+id/button_async"
             android:layout_weight="1"
             android:height="64dp" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_sync"
-            android:id="@+id/sync"
+            android:text="@string/button_retro"
+            android:id="@+id/button_retro"
             android:layout_weight="1"
             android:height="64dp" />
     </LinearLayout>
