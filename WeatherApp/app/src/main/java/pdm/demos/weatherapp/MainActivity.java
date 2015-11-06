@@ -28,10 +28,6 @@ public class MainActivity extends Activity {
 
     /** The edit text used to collect the city name entered by the user. */
     private EditText cityTextView;
-    /** The current language. */
-    private String language;
-    /** The current unit system. */
-    private OpenWeatherProvider.UnitSystem units;
     /** The buttons used to trigger fetching the weather information. */
     private Button buttonAsync, buttonRetro;
 
@@ -55,16 +51,6 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Initializes the locale dependent fields (i.e. language and unit system)
-     */
-    private void initLocaleConfiguration() {
-        final Configuration cfg = getResources().getConfiguration();
-        language = cfg.locale.getISO3Language();
-        units = cfg.locale.getISO3Country().toUpperCase().equals("USA") ?
-                WeatherInfoProvider.UnitSystem.IMPERIAL : WeatherInfoProvider.UnitSystem.METRIC;
-    }
-
-    /**
      * Method that gets the content of the {@link EditText}, validating it.
      * @return The user's input, or null if it was invalid.
      */
@@ -85,8 +71,9 @@ public class MainActivity extends Activity {
      * Gets the weather information.
      */
     private void fetchWeatherInfo(String cityName) {
-        ((WeatherApplication) getApplication()).getWeatherInfoProvider()
-            .getWeatherInfoAsync(cityName, language, units,
+        final WeatherApplication application = (WeatherApplication) getApplication();
+        application.getWeatherInfoProvider()
+            .getWeatherInfoAsync(cityName, application.getLanguage(), application.getUnits(),
                     new WeatherInfoProvider.Callback() {
                         @Override
                         public void onResult(@NonNull WeatherInfoProvider.CallResult result) {
@@ -107,8 +94,16 @@ public class MainActivity extends Activity {
      */
     private void demoFetchWeatherInfoWithAsyncTask(String cityName) {
         (new MyAsyncTask() {
-            private final String language = MainActivity.this.language;
-            private final OpenWeatherProvider.UnitSystem units = MainActivity.this.units;
+            private final WeatherApplication application;
+            private final String language;
+            private final OpenWeatherProvider.UnitSystem units;
+
+            {
+                application = (WeatherApplication) getApplication();
+                language = application.getLanguage();
+                units = application.getUnits();
+            }
+
             // Synchronization not needed here because we are piggy backing it on the
             // underlying thread synchronization... ;) (PC rules!)
             private Exception error;
@@ -116,7 +111,7 @@ public class MainActivity extends Activity {
             @Override
             protected WeatherInfo doInBackground(String cityName) {
                 try {
-                    return ((WeatherApplication) getApplication()).getWeatherInfoProvider()
+                    return application.getWeatherInfoProvider()
                                 .getWeatherInfo(cityName, language, units);
                 } catch (Exception e) {
                     error = e;
@@ -137,8 +132,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initLocaleConfiguration();
 
         cityTextView = (EditText) findViewById(R.id.city);
 
