@@ -2,6 +2,8 @@ package pdm.demos.weatherapp.providers;
 
 import android.support.annotation.NonNull;
 
+import java.util.Locale;
+
 import pdm.demos.weatherapp.providers.openweathermap.WeatherInfoDTO;
 
 /**
@@ -18,7 +20,15 @@ public interface WeatherInfoProvider {
      * Enumeration containing the supported unit systems.
      */
     enum UnitSystem {
-        METRIC, IMPERIAL
+        METRIC("m/s", "ºC"), IMPERIAL("knots", "ºF");
+
+        public final String windSpeedUnits;
+        public final String temperatureUnits;
+
+        UnitSystem(@NonNull String windSpeed, @NonNull String temperature) {
+            windSpeedUnits = windSpeed;
+            temperatureUnits = temperature;
+        }
     }
 
     /**

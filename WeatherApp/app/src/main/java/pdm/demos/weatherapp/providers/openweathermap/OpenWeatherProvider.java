@@ -49,6 +49,7 @@ public class OpenWeatherProvider implements WeatherInfoProvider {
     public void getWeatherInfoAsync(@NonNull String cityName, @NonNull String language, @NonNull UnitSystem units,
                                     @NonNull final Callback completionCallback) {
 
+        Log.v("AAAAA", units.toString().toLowerCase());
         final Call<WeatherInfoDTO> call = serviceAPI
                 .getCurrentWeather(WebAPI.API_KEY, cityName, language, units.toString().toLowerCase());
 

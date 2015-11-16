@@ -8,7 +8,12 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import pdm.demos.weatherapp.providers.CardinalPoint;
 import pdm.demos.weatherapp.providers.WeatherInfo;
+import pdm.demos.weatherapp.utils.LoggingActivity;
 
 /**
  * Activity used to display the current weather information.
@@ -16,9 +21,9 @@ import pdm.demos.weatherapp.providers.WeatherInfo;
  * <p>The weather information to be displayed is received as an extra of the intent used to
  * explicitly navigate to this activity.</p>
  *
- * TODO: display remaining weather elements and image (the image is to be shown using a fragment)
+ * TODO: Redo request when the current locale changes.
  */
-public class WeatherActivity extends Activity {
+public class WeatherActivity extends LoggingActivity {
 
     /** Constant used to identify the extra bearing the weather information. */
     private static final String EXTRA_WEATHER_INFO = "WeatherActivity.Extra.WeatherInfo";
@@ -46,8 +51,27 @@ public class WeatherActivity extends Activity {
      */
     private void displayTemperature(int resId, double temperature) {
         displayText(resId, String.format(currentConfiguration.locale, "%1$.0f %2$s",
-                temperature, getResources().getString(R.string.text_temp_units))
+                        temperature, getResources().getString(R.string.text_temp_units))
         );
+    }
+
+    /**
+     * Helper method that displays the wind information (i.e. direction and speed)
+     * @param weather The weather information.
+     */
+    private void displayWindInformation(WeatherInfo weather) {
+        displayText(R.id.wind, weather.getWindSpeed() + " " +
+                ((WeatherApplication) getApplication()).getUnits().windSpeedUnits + " - " +
+                CardinalPoint.windDegreesToDirection(weather.getWindDirection())
+                        .toString(currentConfiguration.locale));
+    }
+
+    /**
+     * Displays the current date.
+     */
+    private void displayCurrentDate() {
+        final SimpleDateFormat format = new SimpleDateFormat("MMMM, d");
+        displayText(R.id.date, format.format(new Date()));
     }
 
     /**
@@ -60,6 +84,10 @@ public class WeatherActivity extends Activity {
         displayTemperature(R.id.temp, weather.getTemperature());
         displayTemperature(R.id.minTemp, weather.getMinTemperature());
         displayTemperature(R.id.maxTemp, weather.getMaxTemperature());
+        displayWindInformation(weather);
+        displayText(R.id.humidity, weather.getHumidity() +
+                getResources().getString(R.string.text_humidity_units));
+        displayCurrentDate();
     }
 
     /**
@@ -87,6 +115,16 @@ public class WeatherActivity extends Activity {
                     getIntent().getParcelableExtra(EXTRA_WEATHER_INFO));
 
         displayWeatherInfo(currentWeather);
+
+        // If first time, create retained fragment
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(
+                            R.id.weatherImage,
+                            DownloadImageFragment.newInstance(currentWeather.getIconURL())
+                    )
+                    .commit();
+        }
     }
 
     /** {@inheritDoc} */

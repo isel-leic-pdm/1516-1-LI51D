@@ -1,4 +1,4 @@
 <resources>
-    <string name="text_default_temp">- - ºK</string>
-    <string name="text_temp_units">ºK</string>
+    <string name="text_default_temp">- - ºF</string>
+    <string name="text_temp_units">ºF</string>
 </resources>

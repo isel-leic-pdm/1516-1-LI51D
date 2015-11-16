@@ -1,4 +1,4 @@
-package pdm.demos.weatherapp;
+package pdm.demos.weatherapp.utils;
 
 import android.app.Fragment;
 import android.content.Context;
