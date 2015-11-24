@@ -1,8 +1,6 @@
 package pdm.demos.weatherapp;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Configuration;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -14,7 +12,6 @@ import pdm.demos.weatherapp.providers.WeatherInfo;
 import pdm.demos.weatherapp.providers.WeatherInfoProvider;
 import pdm.demos.weatherapp.providers.openweathermap.OpenWeatherProvider;
 import pdm.demos.weatherapp.utils.LoggingActivity;
-import pdm.demos.weatherapp.utils.LoggingService;
 import pdm.demos.weatherapp.utils.MyAsyncTask;
 
 /**
@@ -27,12 +24,13 @@ import pdm.demos.weatherapp.utils.MyAsyncTask;
  * fragment to preserve asynchronous fetching of weather info across configuration changes
  * (if we are dealing with a screen orientation change)
  */
-public class MainActivity extends LoggingActivity {
+public class MainActivity extends LoggingActivity implements WeatherInfoProvider.Callback {
 
     /** The edit text used to collect the city name entered by the user. */
     private EditText cityTextView;
     /** The buttons used to trigger fetching the weather information. */
     private Button buttonAsync, buttonRetro;
+    private String tag;
 
     /**
      * Enables the user interface, thereby allowing for user input.
@@ -74,23 +72,11 @@ public class MainActivity extends LoggingActivity {
      * Gets the weather information.
      */
     private void fetchWeatherInfo(String cityName) {
-        final WeatherApplication application = (WeatherApplication) getApplication();
-        application.getWeatherInfoProvider().getWeatherInfoAsync(
-                cityName, application.getLanguage(), application.getUnits(),
-                new WeatherInfoProvider.Callback() {
-                    @Override
-                    public void onResult(@NonNull WeatherInfoProvider.CallResult result) {
-                        enableUI();
-                        try {
-                            navigateToWeatherActivity(result.getResult());
-                        } catch (Exception e) {
-                            Toast.makeText(MainActivity.this,
-                                    R.string.error_msg_couldntget, Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                }
-        );
+
+        FragmentTransaction tx = getFragmentManager().beginTransaction();
+        final String tag = "HEADLESS_FRAGMENT";
+        tx.add(WeatherInfoRetainedFragment.newInstance(cityName), tag);
+        tx.commit();
     }
 
     /**
@@ -162,5 +148,17 @@ public class MainActivity extends LoggingActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onResult(@NonNull WeatherInfoProvider.CallResult result) {
+        enableUI();
+        try {
+            navigateToWeatherActivity(result.getResult());
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this,
+                    R.string.error_msg_couldntget, Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 }

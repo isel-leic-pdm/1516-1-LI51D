@@ -1,5 +1,6 @@
 package pdm.demos.weatherapp.utils;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +23,13 @@ public class LifecycleLoggingFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Log.d(TAG, "onAttach() - the fragment is being attached to its context");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Log.d(TAG, "onAttach() - the fragment is being attached to its activity");
     }
 
     /** {@inheritDoc} */
