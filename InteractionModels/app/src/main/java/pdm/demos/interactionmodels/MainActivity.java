@@ -44,6 +44,9 @@ public class MainActivity extends Activity {
         Log.v(TAG, "MainActivity.triggerFetchWithSubscriptionThroughIntentService() - " +
                 "Pub / Sub communication example");
 
+        // Food for thought: This implementation is flawed. Can you spot the flaw? How would you
+        // address it? Tip: What happens when the screen orientation changes?
+
         // Subscribe
         MyIntentService.ContractHelper.subscribe(this, new BroadcastReceiver() {
             @Override
@@ -88,6 +91,10 @@ public class MainActivity extends Activity {
     private void triggerFetchWithReplyToThroughStartedService(final String cityName) {
         Log.v(TAG, "MainActivity.triggerFetchWithReplyToThroughStartedService() - " + "" +
                 "Request / Reply communication example");
+
+        // Food for thought: This implementation is also flawed. Can you spot the flaw? How would you
+        // address it? Tips: What happens when the screen orientation changes? Should the solution
+        // be similar to the one appropriate for the former case (Publish/Subscribe)?
 
         startService(MyStartedService.ContractHelper.makeRequestReplyIntent(this, cityName,
                         new Handler.Callback() {
