@@ -2,11 +2,15 @@ package pdm.demos.interactionmodels;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -158,5 +162,66 @@ public class MainActivity extends Activity {
                 triggerFetchWithReplyToThroughStartedService("Lisbon, PT");
             }
         });
+
+        // Lets call the locally hosted bound service
+        doLocalCall();
+        // Lets call the remotely hosted bound service
+        doRemoteCall();
+    }
+
+    /**
+     * Method used to demonstrate the use of a bound service that is hosted in another process.
+     */
+    private void doRemoteCall() {
+
+        // Create the intent used to identify the bound service
+        final Intent remoteBoundIntent = new Intent(this, MyRemoteBoundService.class);
+
+        // Lets get a reference to it (asynchronously, hence the ServiceConnection object)
+        bindService(remoteBoundIntent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+
+                try {
+                    // Let's call it!
+                    (MyBoundServiceContract.Stub.asInterface(service)).doSomething(10);
+                    // We're done. Free the reference to the service
+                    unbindService(this);
+
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                // Called upon unbind, just in case we need some cleanup
+            }
+        }, Context.BIND_AUTO_CREATE);
+    }
+
+    /**
+     * Method used to demonstrate the use of a bound service that is hosted in the same process.
+     */
+    private void doLocalCall() {
+
+        // Create the intent used to identify the bound service
+        final Intent boundIntent = new Intent(this, MyLocalBoundService.class);
+
+        // Lets get a reference to it (asynchronously, hence the ServiceConnection object)
+        bindService(boundIntent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                // Let's call it!
+                ((MyLocalBoundServiceContract) service).doSomething(10);
+                // We're done. Free the reference to the service
+                unbindService(this);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                // Called upon unbind, just in case we need some cleanup
+            }
+        }, Context.BIND_AUTO_CREATE);
     }
 }

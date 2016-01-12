@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pdm.demos.interactionmodels">
+<manifest package="pdm.demos.interactionmodels"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -22,12 +22,21 @@
             android:name=".MyIntentService"
             android:exported="false"
             android:process=":serviceHost"/>
-
         <service
             android:name=".MyStartedService"
             android:exported="false"
             android:process=":serviceHost"/>
-
+        <service
+            android:name=".MyLocalBoundService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+        <service
+            android:name=".MyRemoteBoundService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":serviceHost">
+        </service>
     </application>
 
 </manifest>
